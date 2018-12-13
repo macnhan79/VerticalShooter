@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Create new account</title>
+        <script type="text/javascript" src="getForm.js"></script>
+        <script type="text/javascript" src="cookieFunctions.js"></script>
+    </head>
+
+    <body>
+        <script type="text/javascript">
+            function load() {
+                window.location.href = "handleCookie.php";
+            }
+
+            // Grab the info from the form
+            var url=document.location.href;         
+            $_GET=getForm(url);         
+            
+            for(property in $_GET) {
+                var str=$_GET[property];          // Place property value in string
+                var dec=decodeURIComponent(str);  // Convert to ascii
+                var clean=dec.replace(/\++/g,' ');// Remove + and replace by space
+                $_GET[property]=clean;            // Cleaned values
+            }
+
+            // Use JSON to turn into a string
+            var text=JSON.stringify($_GET);
+
+            // Write the cookie and check it out
+            setCookie("userdata",text,1); 
+            
+            // Load handleCookie.php
+            load();
+
+        </script>
+    </body>
+</html>
